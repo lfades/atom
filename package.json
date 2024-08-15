@@ -1,0 +1,29 @@
+{
+  "name": "@lfades/atom",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": "Luis Alvarez (https://twitter.com/luis_fades)",
+  "description": "Straightforward state management library for React.",
+  "type": "module",
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w"
+  },
+  "exports": {
+    ".": "./dist/atom.js"
+  },
+  "files": [
+    "dist/**/*.{js,d.ts}"
+  ],
+  "keywords": [
+    "react"
+  ],
+  "peerDependencies": {
+    "react": ">= 18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "typescript": "^5.5.4"
+  }
+}
