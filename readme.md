@@ -2,13 +2,13 @@
 
 Straightforward state management library for React. Featuring:
 
-- Minimal API: The entire source code is [84 lines long](src/atom.ts). Feel free to copy it to your project instead of installing the package.
+- Minimal API: The entire source code is [83 lines long](src/atom.ts). Feel free to copy it to your project instead of installing the package.
 - There's no underlying store, it's like a shared `useState`.
 - It helps you remove the complexity of state management by making you do thinks the react-way.
 
 ## Getting Started
 
-Install the package with your package manger of choice:
+Install the package with your package manager of choice:
 
 ```bash
 npm install @lfades/atom
@@ -54,45 +54,45 @@ I think handling state should not be a complicated task. Current alternatives in
 
 #### React Context
 
-A lot of times all that I want is a shared `useState` between components, and `atom` is exactly that. React Context can be overkill in these situations, because depending on the complexity of the app, you'll add more and more providers to handle simple states, it's common that when you only use React Context to globally share state, you'll end up with a long tree of providers, because having a single provider for everything is ultimately bad for performance.
+A lot of times all that I want is a shared `useState` between components, and `atom` is exactly that. React Context can be overkill in these situations, because depending on the complexity of the app, you'll add more and more providers to handle simple states, it's common to end up with a long tree of providers that when you only use React Context to globally share state, because having a single provider for everything can be bad for performance.
 
-React Context has a very good use case when you need to change the state behind a tree of components based on some action or initial state, but a lot of times you don't need that, and if you do, [you can store multiple atoms in React Context that can be individually subscribed to](#usehydrate).
+One of the good use cases for React Context is when you need to change the state behind a tree of components based on some action or initial state, but a lot of times you won't need that, and if you do, [you can store multiple atoms in React Context that can be individually subscribed to](#usehydrate).
 
 #### Third party state management libraries
 
 In case you haven't noticed, this library takes a lot of inspiration from [Jotai](https://jotai.org/). That's intentional because I really enjoy the mental model of Jotai where the state works very similarly to React's `useState` and you're encouraged to do most of the work inside your components, so you're always developing in the react way.
 
-So why not just use Jotai instead? Well, Jotai does more than what I want it to do, like handling async operations and it also allows for setters and state logic to live outside of your hooks/components, which allows you to create a separation between your state and your components.
+So why not just use Jotai instead? Well, Jotai does more than what I want it to do, like handling async operations, and it also allows for setters and state logic to live outside of your hooks/components, allowing you to create a separation between your state and your components that I don't consider to be a positive outcome.
 
 Other popular state management libraries like Redux and Zustand are great but also introduce more complexity in order to handle features you might not need. For example, if you need to handle data fetching it's probably better that you use [SWR](https://swr.vercel.app/). To handle promises the [use](https://react.dev/reference/react/use) hook.
 
 #### How should I handle complex state mutations?
 
-Create a hook that returns your mutation handlers that update one or multiple atoms. For example, I'm building an editor where you can select multiple components to edit them:
+Create a hook that returns your mutation handlers that update one or multiple atoms. For example, I'm building an editor where you can select multiple components to edit them and this is the hook I created to handle the selection:
 
 ```tsx
 export function useComponentActions(componentAtom: Atom<EditorPageBody>) {
   // This reads multiple atoms from React Context.
-  const { importsAtom, selectedComponentAtom } = usePageStore()
+  const { importsAtom, selectedComponentAtom } = usePageStore();
 
   return useMemo(
     () => ({
       selectComponent() {
-        if (selectedComponentAtom.get() === componentAtom) return
+        if (selectedComponentAtom.get() === componentAtom) return;
 
-        const component = componentAtom.get()
-        const imports = importsAtom.get()
-        const variantImport = imports[component.tag]
+        const component = componentAtom.get();
+        const imports = importsAtom.get();
+        const variantImport = imports[component.tag];
         const componentData = variantImport
           ? getComponentData(imports[component.tag].fileName, component.tag)
-          : { commonProps: [], discriminators: {}, props: [] }
+          : { commonProps: [], discriminators: {}, props: [] };
 
-        component.selectedAtom.set({ declaration: componentData })
-        selectedComponentAtom.set(componentAtom)
+        component.selectedAtom.set({ declaration: componentData });
+        selectedComponentAtom.set(componentAtom);
       },
     }),
-    [componentAtom, importsAtom, selectedComponentAtom],
-  )
+    [componentAtom, importsAtom, selectedComponentAtom]
+  );
 }
 ```
 
@@ -109,22 +109,22 @@ function atom<Value>(initialValue: Value): Atom<Value>;
 Creates an atom with the given `initialValue`.
 
 ```ts
-import { atom} from '@lfades/atom';
+import { atom } from '@lfades/atom';
 
 const counterAtom = atom(0);
 ```
 
-You can read the value of the atom without subscribing to it by using the `read` method:
+You can read the value of the atom without subscribing to it by using the `get` method:
 
 ```ts
-atom.get() // 0
+atom.get(); // 0
 ```
 
 Similarly, you can update the value of the atom with `set`:
 
 ```tsx
 atom.set(1);
-atom.get() // 1
+atom.get(); // 1
 ```
 
 When you update the value of the atom, all components subscribed to it will re-render.
@@ -145,6 +145,7 @@ import { useAtom } from '@lfades/atom';
 const [count, setCount] = useAtom(counterAtom);
 // ..
 setCount(1);
+setCount === counterAtom.set; // true
 ```
 
 ```ts
@@ -169,7 +170,11 @@ An atom created this way will work similarly to `useState`. However, you can pas
 ### `useSubscribe`
 
 ```ts
-function useSubscribe<Value>(atom: Atom<Value>, cb: SubFn<Value>, deps?: DependencyList): void;
+function useSubscribe<Value>(
+  atom: Atom<Value>,
+  cb: SubFn<Value>,
+  deps?: DependencyList
+): void;
 ```
 
 Subscribes to the atom and calls the callback function with the new value whenever it changes.
@@ -185,9 +190,13 @@ useSubscribe(counterAtom, (value) => {
 If the callback function has dependencies, you can pass them as the third argument:
 
 ```ts
-useSubscribe(counterAtom, (value) => {
-  console.log(value, dep);
-}, [dep]);
+useSubscribe(
+  counterAtom,
+  (value) => {
+    console.log(value, dep);
+  },
+  [dep]
+);
 ```
 
 ### `useHydrate`
@@ -202,7 +211,7 @@ Allows you to hydrate atoms, useful for updating atoms with data from the server
 // atoms-context.tsx
 import { atom, useHydrate } from '@lfades/atom';
 
-const atoms = { counterAtom: atom(0) }
+const atoms = { counterAtom: atom(0) };
 export const atomsContext = React.createContext(atoms);
 
 export function AtomsProvider({ children, data }) {
@@ -213,25 +222,23 @@ export function AtomsProvider({ children, data }) {
   }, [data]);
 
   return (
-    <atomsContext.Provider value={atoms}>
-      {children}
-    </atomsContext.Provider>
-  )
+    <atomsContext.Provider value={atoms}>{children}</atomsContext.Provider>
+  );
 }
 ```
 
 ```tsx
 // page.tsx
-import { AtomsProvider } from './atoms-context'
-import { Counter } from './counter'
+import { AtomsProvider } from './atoms-context';
+import { Counter } from './counter';
 
 async function Page() {
-  const data = await fetchData()
+  const data = await fetchData();
   return (
     <Atoms data={data}>
       <Counter />
     </Atoms>
-   )
+  );
 }
 ```
 
@@ -240,7 +247,7 @@ The `Counter` component can then get the atom from the context and subscribe to 
 ```tsx
 // counter.tsx
 import { useAtom } from '@lfades/atom';
-import { atomsContext } from './atoms-context'
+import { atomsContext } from './atoms-context';
 
 function Counter() {
   const { counterAtom } = React.useContext(atomsContext);
@@ -252,7 +259,7 @@ function Counter() {
       <button onClick={() => setCount(count + 1)}>Increment</button>
       <button onClick={() => setCount(count - 1)}>Decrement</button>
     </div>
-  )
+  );
 }
 const counterAtom = atom(0);
 ```
