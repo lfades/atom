@@ -54,7 +54,7 @@ I think handling state should not be a complicated task. Current alternatives in
 
 #### React Context
 
-A lot of times all that I want is a shared `useState` between components, and `atom` is exactly that. React Context can be overkill in these situations, because depending on the complexity of the app, you'll add more and more providers to handle simple states, it's common to end up with a long tree of providers that when you only use React Context to globally share state, because having a single provider for everything can be bad for performance.
+A lot of times all that I want is a shared `useState` between components, and `atom` is exactly that. React Context can be overkill in these situations, because depending on the complexity of the app, you'll add more and more providers to handle simple states so it becomes common to end up with a long tree of providers when you only use React Context to globally share state, because having a single provider for everything can be bad for performance.
 
 One of the good use cases for React Context is when you need to change the state behind a tree of components based on some action or initial state, but a lot of times you won't need that, and if you do, [you can store multiple atoms in React Context that can be individually subscribed to](#usehydrate).
 
