@@ -1,0 +1,144 @@
+@import "tailwindcss";
+
+/* Use `data-theme` for dark mode */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* Catppuccin Mocha Colors */
+[data-theme="dark"] {
+  --theme-accent-1: #f5e0dc; /* rosewater */
+  --theme-accent-2: #f2cdcd; /* flamingo */
+  --theme-accent-3: #f5c2e7; /* pink */
+  --theme-accent-4: #cba6f7; /* mauve */
+
+  --theme-danger: #f38ba8; /* red */
+  --theme-danger-1: #eba0ac; /* maroon */
+  --theme-attention: #fab387; /* peach */
+  --theme-warning: #f9e2af; /* yellow */
+  --theme-success: #a6e3a1; /* green */
+
+  --theme-info-1: #94e2d5; /* teal */
+  --theme-info-2: #89dceb; /* sky */
+
+  --theme-color-1: #74c7ec; /* sapphire */ 
+  --theme-color-2: #89b4fa; /* blue */ 
+  --theme-color-3: #b4befe; /* lavender */ 
+
+  --theme-text: #cdd6f4; /* text */
+  --theme-text-1: #bac2de; /* subtext1 */
+  --theme-text-2: #a6adc8; /* subtext0 */
+
+  --theme-overlay: #9399b2; /* overlay2 */
+  --theme-overlay-1: #7f849c; /* overlay1 */
+  --theme-overlay-2: #6c7086; /* overlay0 */
+
+  --theme-surface: #585b70; /* surface2 */
+  --theme-surface-1: #45475a;/* surface1 */
+  --theme-surface-2: #313244;/* surface0 */
+
+  --theme-pane: #1e1e2e; /* base */
+  --theme-pane-1: #181825; /* mantle */
+  --theme-pane-2: #11111b; /* crust */
+  
+  --theme-link: var(--theme-color-2);
+  --theme-link-active: var(--theme-color-3);
+  --theme-link-hover: var(--theme-info-2);
+  --theme-cursor: var(--theme-accent-1);
+}
+
+/* Catppuccin Latte Colors */
+[data-theme="light"] {
+  --theme-accent-1: #dc8a78; /* rosewater */
+  --theme-accent-2: #dd7878; /* flamingo */
+  --theme-accent-3: #ea76cb; /* pink */
+  --theme-accent-4: #8839ef; /* mauve */
+
+  --theme-danger: #d20f39; /* red */
+  --theme-danger-1: #e64553; /* maroon */
+  --theme-attention: #fe640b; /* peach */
+  --theme-warning: #df8e1d; /* yellow */
+  --theme-success: #40a02b; /* green */
+
+  --theme-info-1: #179299; /* teal */
+  --theme-info-2: #04a5e5; /* sky */
+
+  --theme-color-1: #209fb5; /* sapphire */
+  --theme-color-2: #1e66f5; /* blue */
+  --theme-color-3: #7287fd; /* lavender */
+
+  --theme-text: #4c4f69; /* text */
+  --theme-text-1: #5c5f77; /* subtext1 */
+  --theme-text-2: #6c6f85; /* subtext0 */
+
+  --theme-overlay: #7c7f93; /* overlay2 */
+  --theme-overlay-1: #8c8fa1; /* overlay1 */
+  --theme-overlay-2: #9ca0b0; /* overlay0 */
+
+  --theme-surface: #acb0be; /* surface2 */
+  --theme-surface-1: #bcc0cc; /* surface1 */
+  --theme-surface-2: #ccd0da; /* surface0 */
+
+  --theme-pane: #eff1f5; /* base */
+  --theme-pane-1: #e6e9ef; /* mantle */
+  --theme-pane-2: #dce0e8; /* crust */
+
+  --theme-link: var(--theme-color-2);
+  --theme-link-active: var(--theme-color-3);
+  --theme-link-hover: var(--theme-info-2);
+  --theme-cursor: var(--theme-accent-1);
+}
+
+body {
+  background-color: var(--ctp-base);
+  color: var(--ctp-text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+@theme {
+  --font-mono: var(--font-maple-mono), Monaco, Menlo, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --color-accent-1: var(--theme-accent-1);
+  --color-accent-2: var(--theme-accent-2);
+  --color-accent-3: var(--theme-accent-3);
+  --color-accent-4: var(--theme-accent-4);
+
+  --color-danger: var(--theme-danger);
+  --color-danger-1: var(--theme-danger-1);
+  --color-attention: var(--theme-attention);
+  --color-warning: var(--theme-warning);
+  --color-success: var(--theme-success);
+
+  --color-info-1: var(--theme-info-1);
+  --color-info-2: var(--theme-info-2);
+
+  --color-1: var(--theme-color-1);
+  --color-2: var(--theme-color-2);
+  --color-3: var(--theme-color-3);
+
+  --color-text: var(--theme-text);
+  --color-text-1: var(--theme-text-1);
+  --color-text-2: var(--theme-text-2);
+
+  --color-overlay: var(--theme-overlay);
+  --color-overlay-1: var(--theme-overlay-1);
+  --color-overlay-2: var(--theme-overlay-2);
+
+  --color-surface: var(--theme-surface);
+  --color-surface-1: var(--theme-surface-1);
+  --color-surface-2: var(--theme-surface-2);
+
+  --color-pane: var(--theme-pane);
+  --color-pane-1: var(--theme-pane-1);
+  --color-pane-2: var(--theme-pane-2);
+
+  --color-link: var(--theme-link);
+  --color-link-active: var(--theme-link-active);
+  --color-link-hover: var(--theme-link-hover);
+  --color-cursor: var(--theme-cursor);
+}
