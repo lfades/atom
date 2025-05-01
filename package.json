@@ -1,28 +1,25 @@
 {
-	"name": "@lfades/atom",
-	"version": "1.0.0",
+	"name": "monorepo",
+	"version": "0.0.0",
+	"private": true,
 	"license": "MIT",
-	"author": "Luis Alvarez (https://twitter.com/luis_fades)",
-	"description": "Straightforward state management library for React.",
-	"type": "module",
-	"sideEffects": false,
+	"author": {
+		"name": "lfades",
+		"url": "https://twitter.com/luis_fades"
+	},
 	"scripts": {
-		"build": "tsc",
-		"dev": "tsc -w",
-		"version-packages": "changeset version",
-		"release": "pnpm build && pnpm publish -r"
+		"build": "turbo run build",
+		"dev": "turbo run dev",
+		"dev:api": "vc dev --listen 3010",
+		"start": "turbo run start",
+		"format": "turbo run format",
+		"lint": "turbo run lint",
+		"check": "turbo run check",
+		"clean": "turbo run clean"
 	},
-	"exports": {
-		".": "./dist/atom.js"
-	},
-	"files": ["dist/**/*.{js,d.ts}"],
-	"keywords": ["react"],
-	"peerDependencies": {
-		"react": ">= 18.0.0"
-	},
+	"packageManager": "pnpm@10.6.5",
 	"devDependencies": {
-		"@changesets/cli": "^2.29.2",
-		"@types/react": "^18.3.20",
-		"typescript": "^5.8.3"
+		"@biomejs/biome": "1.9.4",
+		"turbo": "^2.5.2"
 	}
 }
