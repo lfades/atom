@@ -1,47 +1,47 @@
-import { useEffect, useRef, useState, type DependencyList } from "react";
+import { useEffect, useRef, useState, type DependencyList } from "react"
 
 export interface Atom<Value>
 	extends Readonly<{
-		id: string;
-		get(): Value;
-		set(value: Value): void;
-		sub(cb: SubFn<Value>): Unsub;
+		id: string
+		get(): Value
+		set(value: Value): void
+		sub(cb: SubFn<Value>): Unsub
 	}> {}
 
-export type SubFn<Value> = (value: Value) => void;
-export type Unsub = () => void;
+export type SubFn<Value> = (value: Value) => void
+export type Unsub = () => void
 
-let atomCount = 0;
+let atomCount = 0
 
 export function atom<Value>(initialValue: Value): Atom<Value> {
-	let value = initialValue;
-	let subs: SubFn<Value>[] = [];
-	let id = `atom${atomCount++}`;
+	let value = initialValue
+	let subs: SubFn<Value>[] = []
+	let id = `atom${atomCount++}`
 	return Object.freeze({
 		id,
 		get() {
-			return value;
+			return value
 		},
 		set(newValue) {
-			if (value === newValue) return;
-			value = newValue;
+			if (value === newValue) return
+			value = newValue
 			subs.forEach((cb) => {
-				cb(value);
-			});
+				cb(value)
+			})
 		},
 		sub(cb) {
-			subs.push(cb);
+			subs.push(cb)
 			return () => {
-				subs = subs.filter((sub) => sub !== cb);
-			};
+				subs = subs.filter((sub) => sub !== cb)
+			}
 		},
-	} satisfies Atom<Value>);
+	} satisfies Atom<Value>)
 }
 
 export function useAtom<Value>(atom: Atom<Value>) {
-	const [_count, rerender] = useState(0);
-	useSubscribe(atom, () => rerender((c) => c + 1));
-	return [atom.get(), atom.set] as const;
+	const [_count, rerender] = useState(0)
+	useSubscribe(atom, () => rerender((c) => c + 1))
+	return [atom.get(), atom.set] as const
 }
 
 export function useSubscribe<Value>(
@@ -49,7 +49,7 @@ export function useSubscribe<Value>(
 	cb: SubFn<Value>,
 	deps: DependencyList = [],
 ) {
-	useEffect(() => atom.sub(cb), [atom, ...deps]);
+	useEffect(() => atom.sub(cb), [atom, ...deps])
 }
 
 enum HydrateState {
@@ -59,13 +59,13 @@ enum HydrateState {
 }
 
 export function useHydrate(cb: () => void, deps: DependencyList) {
-	const hydratedRef = useRef<HydrateState>(HydrateState.Pending);
+	const hydratedRef = useRef<HydrateState>(HydrateState.Pending)
 
 	// Hydrate immediately for SSR and for the first render in the browser, this
 	// should avoid hydration mismatches.
 	if (hydratedRef.current === HydrateState.Pending) {
-		hydratedRef.current = HydrateState.Done;
-		cb();
+		hydratedRef.current = HydrateState.Done
+		cb()
 	}
 
 	// This allows bundlers to remove the effect at build time.
@@ -74,10 +74,10 @@ export function useHydrate(cb: () => void, deps: DependencyList) {
 			// Prevent a double hydration and potential mismatch issues by running the
 			// callback only from the second render onwards.
 			if (hydratedRef.current === HydrateState.Done) {
-				hydratedRef.current = HydrateState.Effect;
+				hydratedRef.current = HydrateState.Effect
 			} else {
-				cb();
+				cb()
 			}
-		}, deps);
+		}, deps)
 	}
 }

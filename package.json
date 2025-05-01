@@ -12,7 +12,7 @@
 		"dev": "turbo run dev",
 		"dev:api": "vc dev --listen 3010",
 		"start": "turbo run start",
-		"format": "turbo run format",
+		"format": "biome format --write",
 		"lint": "turbo run lint",
 		"check": "turbo run check",
 		"clean": "turbo run clean"
