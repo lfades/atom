@@ -25,7 +25,7 @@ export function ThemeSwitcher() {
 				<Button
 					variant="ghost"
 					size="icon"
-					className="rounded-md border-surface-2 hover:border hover:bg-pane-2 cursor-pointer"
+					className="rounded-md"
 					aria-label="Toggle theme"
 				>
 					{mounted && theme === "dark" ? (
@@ -37,28 +37,16 @@ export function ThemeSwitcher() {
 					)}
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent
-				align="end"
-				className="bg-pane-1 border border-surface-2"
-			>
-				<DropdownMenuItem
-					className="hover:bg-pane-2 cursor-pointer"
-					onClick={() => setTheme("light")}
-				>
+			<DropdownMenuContent align="end">
+				<DropdownMenuItem onClick={() => setTheme("light")}>
 					<Sun className="mr-2 h-4 w-4" />
 					<span>Light</span>
 				</DropdownMenuItem>
-				<DropdownMenuItem
-					className="hover:bg-pane-2 cursor-pointer"
-					onClick={() => setTheme("dark")}
-				>
+				<DropdownMenuItem onClick={() => setTheme("dark")}>
 					<Moon className="mr-2 h-4 w-4" />
 					<span>Dark</span>
 				</DropdownMenuItem>
-				<DropdownMenuItem
-					className="hover:bg-pane-2 cursor-pointer"
-					onClick={() => setTheme("system")}
-				>
+				<DropdownMenuItem onClick={() => setTheme("system")}>
 					<Laptop className="mr-2 h-4 w-4" />
 					<span>System</span>
 				</DropdownMenuItem>

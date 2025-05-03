@@ -1,47 +1,26 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { Menu, Moon, Sun, Laptop } from "lucide-react"
-import { motion } from "framer-motion"
-import { useTheme } from "next-themes"
 import Link from "next/link"
+import { Menu } from "lucide-react"
+import * as motion from "./motion"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Separator } from "@/components/ui/separator"
 import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+	Sheet,
+	SheetContent,
+	SheetTitle,
+	SheetTrigger,
+} from "@/components/ui/sheet"
 import { NavLink } from "./nav-link"
 import { ThemeSwitcher } from "./theme-switcher"
 
 export function Navigation() {
-	const [mounted, setMounted] = useState(false)
-	const { theme, setTheme } = useTheme()
-
-	useEffect(() => {
-		setMounted(true)
-	}, [])
-
-	const sections = [
-		{ id: "features", name: "Features" },
-		{ id: "installation", name: "Installation" },
-		{ id: "faq", name: "FAQ" },
-		{ id: "api", name: "API" },
-		{ id: "contributing", name: "Contributing" },
-	]
-
 	return (
 		<motion.nav
-			className="sticky top-0 z-50 border-b border-surface-2 bg-pane-1/80 backdrop-blur-sm"
+			className="sticky top-0 z-50 border-b bg-pane-1/80 backdrop-blur-sm"
 			initial={{ y: -100 }}
 			animate={{ y: 0 }}
 			transition={{ duration: 0.3 }}
 		>
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-				<div className="flex h-16 items-center justify-between text-text">
+				<div className="flex h-16 items-center justify-between">
 					<Link href="/" className="text-xl font-bold">
 						@lfades/atom
 					</Link>
@@ -66,35 +45,25 @@ export function Navigation() {
 						<div className="md:hidden">
 							<Sheet>
 								<SheetTrigger asChild>
-									<Button
-										variant="ghost"
-										size="icon"
-										className="rounded-md border-surface-2 hover:border hover:bg-pane-2 cursor-pointer"
-										aria-label="Open menu"
-									>
+									<Button variant="ghost" size="icon" aria-label="Open menu">
 										<Menu size={20} />
 									</Button>
 								</SheetTrigger>
 								<SheetContent side="right">
+									<SheetTitle className="sr-only">Header navigation</SheetTitle>
 									<div className="flex flex-col py-4">
-										<ul className="flex flex-col space-y-4">
-											{sections.map((section) => (
-												<li key={section.id}>
-													<a
-														href={`#${section.id}`}
-														className="block py-2 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
-													>
-														{section.name}
-													</a>
-												</li>
-											))}
-											<Separator />
-											<li>
+										<ul className="flex flex-col space-y-4 mx-4">
+											<NavLink id="features">Features</NavLink>
+											<NavLink id="installation">Installation</NavLink>
+											<NavLink id="faq">FAQ</NavLink>
+											<NavLink id="api">API</NavLink>
+											<NavLink id="contributing">Contributing</NavLink>
+											<li className="flex">
 												<a
 													href="https://github.com/lfades/atom"
 													target="_blank"
 													rel="noopener noreferrer"
-													className="block py-2 text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+													className="block text-sm font-medium hover:text-link-hover"
 												>
 													GitHub
 												</a>
