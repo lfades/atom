@@ -1,51 +1,14 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState } from "react"
 import { ArrowRight, Github, Copy, Check } from "lucide-react"
-import { motion } from "framer-motion"
+import * as motion from "./motion"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Card } from "./ui/card"
 // import { ThemeExample } from "./examples/theme-example"
 // import { CartExample } from "./examples/cart-example"
 // import { DrawingExample } from "./examples/drawing-example"
-
-// Simplified implementation of the atom library for the demo
-type Listener<T> = (value: T) => void
-type Atom<T> = {
-	get: () => T
-	set: (value: T) => void
-	subscribe: (listener: Listener<T>) => () => void
-}
-
-function atom<T>(initialValue: T): Atom<T> {
-	let value = initialValue
-	const listeners = new Set<Listener<T>>()
-
-	return {
-		get: () => value,
-		set: (newValue) => {
-			value = newValue
-			listeners.forEach((listener) => listener(value))
-		},
-		subscribe: (listener) => {
-			listeners.add(listener)
-			return () => {
-				listeners.delete(listener)
-			}
-		},
-	}
-}
-
-function useAtom<T>(atomInstance: Atom<T>) {
-	const [value, setValue] = useState(atomInstance.get())
-
-	useMemo(() => {
-		const unsubscribe = atomInstance.subscribe(setValue)
-		return () => unsubscribe()
-	}, [atomInstance])
-
-	return [value, atomInstance.set] as const
-}
 
 export function Hero() {
 	const [activeTab, setActiveTab] = useState("theme")
@@ -459,8 +422,7 @@ export function ToolSettings() {
 	}
 
 	return (
-		<section className="relative overflow-hidden bg-gradient-to-b from-white to-gray-50 py-20 dark:from-zinc-900 dark:to-black">
-			<div className="absolute inset-0 bg-[url('/grid.png')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
+		<section className="relative overflow-hidden bg-gradient-to-b from-pane to-pane-2 py-20">
 			<div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div className="mx-auto max-w-4xl text-center">
 					<motion.div
@@ -468,10 +430,10 @@ export function ToolSettings() {
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5 }}
 					>
-						<h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
+						<h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
 							@lfades/atom
 						</h1>
-						<p className="mt-6 text-xl leading-8 text-gray-600 dark:text-gray-300">
+						<p className="mt-6 text-xl leading-8">
 							Straightforward state management for React in just 83 lines of
 							code.
 						</p>
@@ -505,10 +467,8 @@ export function ToolSettings() {
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.6, delay: 0.3 }}
 				>
-					{/* Code example on the left */}
-					<div className="flex h-[500px] flex-col overflow-hidden rounded-2xl bg-gray-900 shadow-2xl">
-						{/* Merged header and tabs */}
-						<div className="flex items-center justify-between border-b border-gray-800 bg-gray-800 px-4">
+					<Card className="flex h-[500px] flex-col overflow-hidden">
+						<div className="flex items-center justify-between px-4">
 							<Tabs
 								value={activeCodeTab}
 								onValueChange={setActiveCodeTab}
@@ -549,7 +509,7 @@ export function ToolSettings() {
 								</code>
 							</pre>
 						</div>
-					</div>
+					</Card>
 
 					{/* Live examples on the right */}
 					<div className="flex flex-col justify-center">

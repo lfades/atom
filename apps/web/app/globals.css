@@ -43,6 +43,8 @@
 	--theme-pane-2: #11111b; /* crust */
 
 	/* UI colors */
+	--theme-primary: var(--theme-accent-1);
+	--theme-primary-foreground: var(--theme-pane);
 	--theme-link: var(--theme-color-2);
 	--theme-link-active: var(--theme-color-3);
 	--theme-link-hover: var(--theme-info-2);
@@ -87,6 +89,8 @@
 	--theme-pane-2: #dce0e8; /* crust */
 
 	/* UI colors */
+	--theme-primary: var(--theme-accent-1);
+	--theme-primary-foreground: var(--theme-pane);
 	--theme-link: var(--theme-color-2);
 	--theme-link-active: var(--theme-color-3);
 	--theme-link-hover: var(--theme-info-2);
@@ -97,12 +101,12 @@
 	/* Shadcn variables */
 	--background: var(--theme-pane);
 	--foreground: var(--theme-text);
-	--card: var(--theme-surface);
+	--card: var(--theme-pane-1);
 	--card-foreground: var(--theme-text);
 	--popover: var(--theme-pane-1);
 	--popover-foreground: var(--theme-text);
-	--primary: var(--theme-accent-1);
-	--primary-foreground: var(--theme-text);
+	--primary: var(--theme-primary);
+	--primary-foreground: var(--theme-primary-foreground);
 	--secondary: var(--theme-accent-2);
 	--secondary-foreground: var(--theme-text);
 	--muted: var(--theme-overlay-2);
