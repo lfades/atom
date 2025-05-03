@@ -1,9 +1,16 @@
-import { useEffect, useRef, useState, type DependencyList } from "react"
+import {
+	useEffect,
+	useRef,
+	useSyncExternalStore,
+	useDebugValue,
+	type DependencyList,
+} from "react"
 
 export interface Atom<Value>
 	extends Readonly<{
 		id: string
 		get(): Value
+		getInitial(): Value
 		set(value: Value): void
 		sub(cb: SubFn<Value>): Unsub
 	}> {}
@@ -15,33 +22,43 @@ let atomCount = 0
 
 export function atom<Value>(initialValue: Value): Atom<Value> {
 	let value = initialValue
-	let subs: SubFn<Value>[] = []
-	let id = `atom${atomCount++}`
+	const subs = new Set<SubFn<Value>>()
+	const id = `atom${atomCount++}`
+
 	return Object.freeze({
 		id,
 		get() {
 			return value
 		},
+		getInitial() {
+			return initialValue
+		},
 		set(newValue) {
-			if (value === newValue) return
+			if (typeof window === "undefined") {
+				console.trace(
+					"Calling atom.set() in the server can lead to unexpected behavior so no changes will be made.",
+				)
+				return
+			}
+			if (Object.is(value, newValue)) return
 			value = newValue
-			subs.forEach((cb) => {
-				cb(value)
-			})
+			for (const sub of subs) {
+				sub(value)
+			}
 		},
 		sub(cb) {
-			subs.push(cb)
+			subs.add(cb)
 			return () => {
-				subs = subs.filter((sub) => sub !== cb)
+				subs.delete(cb)
 			}
 		},
 	} satisfies Atom<Value>)
 }
 
 export function useAtom<Value>(atom: Atom<Value>) {
-	const [_count, rerender] = useState(0)
-	useSubscribe(atom, () => rerender((c) => c + 1))
-	return [atom.get(), atom.set] as const
+	const value = useSyncExternalStore(atom.sub, atom.get, atom.getInitial)
+	useDebugValue(`${atom.id}: ${value}`)
+	return [value, atom.set] as const
 }
 
 export function useSubscribe<Value>(
