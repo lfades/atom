@@ -60,7 +60,7 @@ export function Hero() {
 						</div>
 
 						<div className="flex-1 overflow-auto px-4 text-sm">
-							<CodeBlock lang="tsx" data-id="code-sample">
+							<CodeBlock lang="tsx" data-id="code-sample" card>
 								{`import { atom, useAtom } from "@lfades/atom"
 
 const counterAtom = atom(0)

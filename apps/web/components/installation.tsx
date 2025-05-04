@@ -63,13 +63,15 @@ function PackageTrigger({ value }: { value: string }) {
 function CommandCard({ value, children }: { value: string; children: string }) {
 	return (
 		<TabsContent value={value}>
-			<Card>
+			<Card className="bg-pane">
 				<CardContent className="relative">
-					<pre className="overflow-x-auto text-sm">
-						<CodeBlock lang="bash" data-id="install-command">
-							{children}
-						</CodeBlock>
-					</pre>
+					<CodeBlock
+						lang="bash"
+						data-id="install-command"
+						className="text-sm overflow-x-auto"
+					>
+						{children}
+					</CodeBlock>
 					<CopyButton
 						id="install-command"
 						className="absolute right-4 -top-2"

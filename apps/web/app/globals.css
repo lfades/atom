@@ -135,7 +135,7 @@
 
 	/* Shiki variables */
 	--shiki-foreground: var(--theme-text);
-	--shiki-background: var(--card);
+	--shiki-background: var(--theme-pane);
 	--shiki-token-constant: var(--theme-attention);
 	--shiki-token-string: var(--theme-success);
 	--shiki-token-comment: var(--theme-overlay);
