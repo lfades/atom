@@ -34,12 +34,6 @@ export function atom<Value>(initialValue: Value): Atom<Value> {
 			return initialValue
 		},
 		set(newValue) {
-			if (typeof window === "undefined") {
-				console.trace(
-					"Calling atom.set() in the server can lead to unexpected behavior so no changes will be made.",
-				)
-				return
-			}
 			if (Object.is(value, newValue)) return
 			value = newValue
 			for (const sub of subs) {
