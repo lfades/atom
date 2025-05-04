@@ -1,3 +1,4 @@
+import type { ReactNode } from "react"
 import Link from "next/link"
 import { Menu } from "lucide-react"
 import * as motion from "./motion"
@@ -8,7 +9,6 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet"
-import { NavLink } from "./nav-link"
 import { ThemeSwitcher } from "./theme-switcher"
 
 export function Navigation() {
@@ -77,5 +77,18 @@ export function Navigation() {
 				</div>
 			</div>
 		</motion.nav>
+	)
+}
+
+function NavLink({ id, children }: { id: string; children: ReactNode }) {
+	return (
+		<li className="flex items-center">
+			<a
+				href={`#${id}`}
+				className="text-sm font-medium transition-colors hover:text-link-hover"
+			>
+				{children}
+			</a>
+		</li>
 	)
 }
