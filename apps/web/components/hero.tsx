@@ -56,7 +56,7 @@ export function Hero() {
 					<Card className="flex flex-col overflow-hidden pt-0">
 						<div className="flex items-center justify-between bg-pane px-4 py-1">
 							<div className="text-sm font-medium">counter.tsx</div>
-							<CopyButton />
+							<CopyButton id="code-sample" variant="complete" />
 						</div>
 
 						<div className="flex-1 overflow-auto px-4 text-sm">

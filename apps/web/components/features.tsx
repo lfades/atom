@@ -41,7 +41,7 @@ export function Features() {
 					</Feature>
 					<Feature order={2} title="No Store">
 						There's no underlying store or use of React Context. It's just a
-						shared useState.
+						shared <code className="text-secondary">useState</code>.
 					</Feature>
 					<Feature order={3} title="Less is More">
 						React can do what a state management library does. You don't need

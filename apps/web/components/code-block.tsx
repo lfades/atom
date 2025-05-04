@@ -2,7 +2,7 @@ import "server-only"
 import { createCssVariablesTheme, createHighlighter } from "shiki"
 
 type Props = Omit<React.HTMLProps<HTMLDivElement>, "children"> & {
-	lang: "tsx"
+	lang: "tsx" | "bash"
 	children: string
 }
 
@@ -15,7 +15,7 @@ const theme = createCssVariablesTheme({
 
 const highlighterPromise = createHighlighter({
 	themes: [theme],
-	langs: ["tsx"],
+	langs: ["tsx", "bash"],
 })
 
 export async function CodeBlock({ children, lang, ...rest }: Props) {

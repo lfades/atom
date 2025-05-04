@@ -109,8 +109,8 @@
 	--primary-foreground: var(--theme-primary-foreground);
 	--secondary: var(--theme-accent-2);
 	--secondary-foreground: var(--theme-text);
-	--muted: var(--theme-overlay-2);
-	--muted-foreground: var(--theme-text);
+	--muted: var(--theme-pane-2);
+	--muted-foreground: var(--theme-text-2);
 	--accent: var(--theme-pane-2);
 	--accent-foreground: var(--theme-text-1);
 	--destructive: var(--theme-danger);
