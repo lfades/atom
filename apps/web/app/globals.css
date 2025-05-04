@@ -112,7 +112,7 @@
 	--muted: var(--theme-overlay-2);
 	--muted-foreground: var(--theme-text);
 	--accent: var(--theme-pane-2);
-	--accent-foreground: var(--theme-text);
+	--accent-foreground: var(--theme-text-1);
 	--destructive: var(--theme-danger);
 	--destructive-foreground: var(--theme-text);
 	--border: var(--theme-surface-2);
@@ -132,6 +132,19 @@
 	--sidebar-accent-foreground: var(--theme-text);
 	--sidebar-border: var(--theme-surface-2);
 	--sidebar-ring: var(--theme-accent-1);
+
+	/* Shiki variables */
+	--shiki-foreground: var(--theme-text);
+	--shiki-background: var(--card);
+	--shiki-token-constant: var(--theme-attention);
+	--shiki-token-string: var(--theme-success);
+	--shiki-token-comment: var(--theme-overlay);
+	--shiki-token-keyword: var(--theme-accent-4);
+	--shiki-token-parameter: var(--theme-attention);
+	--shiki-token-function: var(--theme-color-2);
+	--shiki-token-string-expression: var(--theme-success);
+	--shiki-token-punctuation: var(--theme-overlay);
+	--shiki-token-link: var(--theme-link);
 }
 
 @theme {
