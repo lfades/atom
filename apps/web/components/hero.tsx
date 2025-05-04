@@ -1,33 +1,13 @@
 import "server-only"
 import { ArrowRight, Github } from "lucide-react"
-import * as motion from "./motion"
 import { Button } from "@/components/ui/button"
-import { Card } from "./ui/card"
+import { Card } from "@/components/ui/card"
 import { CounterExample } from "./examples/counter"
 import { CopyButton } from "./copy-button"
 import { CodeBlock } from "./code-block"
+import * as motion from "./motion"
 
 export function Hero() {
-	const counterCode = `import { atom, useAtom } from "@lfades/atom"
-
-const counterAtom = atom(0)
-
-function Counter({ props }: Props) {
-	const [count, setCount] = useAtom(counterAtom)
-	const increment = () => setCount(count + 1)
-	const decrement = () => setCount(count - 1)
-
-	return (
-		<div className="flex flex-col items-center gap-4">
-			<div className="text-4xl font-bold">{count}</div>
-			<div className="flex gap-2">
-				<button onClick={decrement}>-</button>
-				<button onClick={increment}>+</button>
-			</div>
-		</div>
-	)
-}`
-
 	return (
 		<section className="relative overflow-hidden bg-gradient-to-b from-pane to-pane-2 py-20">
 			<div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -68,7 +48,7 @@ function Counter({ props }: Props) {
 				</div>
 
 				<motion.div
-					className="mt-16 grid gap-6 grid-cols-[2fr_1fr]"
+					className="mt-16 grid gap-6 sm:grid-cols-[2fr_1fr]"
 					initial={{ opacity: 0, y: 40 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.6, delay: 0.3 }}
@@ -81,7 +61,25 @@ function Counter({ props }: Props) {
 
 						<div className="flex-1 overflow-auto px-4 text-sm">
 							<CodeBlock lang="tsx" data-id="code-sample">
-								{counterCode}
+								{`import { atom, useAtom } from "@lfades/atom"
+
+const counterAtom = atom(0)
+
+function Counter({ props }: Props) {
+	const [count, setCount] = useAtom(counterAtom)
+	const increment = () => setCount(count + 1)
+	const decrement = () => setCount(count - 1)
+
+	return (
+		<div className="flex flex-col items-center gap-4">
+			<div className="text-4xl font-bold">{count}</div>
+			<div className="flex gap-2">
+				<button onClick={decrement}>-</button>
+				<button onClick={increment}>+</button>
+			</div>
+		</div>
+	)
+}`}
 							</CodeBlock>
 						</div>
 					</Card>
