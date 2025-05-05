@@ -29,7 +29,7 @@ export function Features() {
 
 				<div className="mt-16 grid gap-8 md:grid-cols-3">
 					<Feature order={1} title="Minimal API">
-						The entire source code is only 100 lines long. Feel free to{" "}
+						The entire source code is less than 100 lines long. Feel free to{" "}
 						<a
 							href="https://github.com/lfades/atom/blob/monorepo/packages/atom/src/atom.ts"
 							target="_blank"

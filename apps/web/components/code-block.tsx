@@ -1,6 +1,10 @@
-import type { CSSProperties } from "react"
 import "server-only"
-import { createCssVariablesTheme, createHighlighter } from "shiki"
+import type { CSSProperties } from "react"
+import {
+	createCssVariablesTheme,
+	createHighlighter,
+	type HighlighterGeneric,
+} from "shiki"
 
 type Props = Omit<React.HTMLProps<HTMLDivElement>, "children"> & {
 	lang: "tsx" | "bash"
@@ -15,13 +19,25 @@ const theme = createCssVariablesTheme({
 	fontStyle: true,
 })
 
-const highlighterPromise = createHighlighter({
-	themes: [theme],
-	langs: ["tsx", "bash"],
-})
+// This function gets initialized in instrumentation.ts to prevent Shiki
+// from being initialized multiple times.
+export function initHighlighter(): Promise<
+	HighlighterGeneric<"tsx" | "bash", string>
+> {
+	const _global = globalThis as any
+
+	_global.shikiHighlighter =
+		_global.shikiHighlighter ||
+		createHighlighter({
+			themes: [theme],
+			langs: ["tsx", "bash"],
+		})
+
+	return _global.shikiHighlighter
+}
 
 export async function CodeBlock({ children, lang, card, ...rest }: Props) {
-	const highlighter = await highlighterPromise
+	const highlighter = await initHighlighter()
 	const html = highlighter.codeToHtml(children, {
 		lang,
 		theme: "css-variables",

@@ -3,7 +3,7 @@ import { Hero } from "@/components/hero"
 import { Features } from "@/components/features"
 import { Installation } from "@/components/installation"
 import { API } from "@/components/api-reference"
-// import { FAQ } from "@/components/faq"
+import { FAQ } from "@/components/faq"
 // import { Contributing } from "@/components/contributing"
 // import { Footer } from "@/components/footer"
 
@@ -16,7 +16,7 @@ export default function Home() {
 				<Features />
 				<Installation />
 				<API />
-				{/*   <FAQ /> */}
+				<FAQ />
 				{/*   <Contributing /> */}
 			</main>
 			{/* <Footer /> */}

@@ -1,4 +1,3 @@
-import { Copy, Check } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { CodeBlock } from "./code-block"
 import { CopyButton } from "./copy-button"
@@ -32,7 +31,7 @@ export function API() {
 					<div className="mt-12 space-y-12">
 						<ApiSection
 							name="atom"
-							description="Creates an atom with the given initialValue."
+							description="Creates an atom with a given initialValue."
 							code={`import { atom } from '@lfades/atom';
 
 const counterAtom = atom(0);
@@ -115,12 +114,13 @@ function ApiSection({
 	description: string
 	code: string
 }) {
+	const id = `api-${name}`
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 20 }}
 			whileInView={{ opacity: 1, y: 0 }}
 			viewport={{ once: true }}
-			transition={{ duration: 1 }}
+			transition={{ duration: 0.5, delay: 0.1 }}
 		>
 			<Card>
 				<CardHeader>
@@ -134,15 +134,12 @@ function ApiSection({
 								<CardContent className="relative pt-6 sm:pt-0">
 									<CodeBlock
 										lang="tsx"
-										data-id="install-command"
+										data-id={id}
 										className="text-sm overflow-x-auto"
 									>
 										{code}
 									</CodeBlock>
-									<CopyButton
-										id="install-command"
-										className="absolute right-4 -top-2"
-									/>
+									<CopyButton id={id} className="absolute right-4 -top-2" />
 								</CardContent>
 							</Card>
 						</div>
