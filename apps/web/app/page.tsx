@@ -4,8 +4,7 @@ import { Features } from "@/components/features"
 import { Installation } from "@/components/installation"
 import { API } from "@/components/api-reference"
 import { FAQ } from "@/components/faq"
-// import { Contributing } from "@/components/contributing"
-// import { Footer } from "@/components/footer"
+import { Footer } from "@/components/footer"
 
 export default function Home() {
 	return (
@@ -17,9 +16,8 @@ export default function Home() {
 				<Installation />
 				<API />
 				<FAQ />
-				{/*   <Contributing /> */}
 			</main>
-			{/* <Footer /> */}
+			<Footer />
 		</div>
 	)
 }

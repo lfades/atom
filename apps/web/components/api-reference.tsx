@@ -31,7 +31,7 @@ export function API() {
 					<div className="mt-12 space-y-12">
 						<ApiSection
 							name="atom"
-							description="Creates an atom with a given initialValue."
+							description="Creates an atom with a given initial value."
 							code={`import { atom } from '@lfades/atom';
 
 const counterAtom = atom(0);
