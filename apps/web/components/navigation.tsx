@@ -31,7 +31,6 @@ export function Navigation() {
 							<NavLink id="installation">Installation</NavLink>
 							<NavLink id="faq">FAQ</NavLink>
 							<NavLink id="api">API</NavLink>
-							<NavLink id="contributing">Contributing</NavLink>
 						</ul>
 						<a
 							href="https://github.com/lfades/atom"
