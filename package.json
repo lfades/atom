@@ -17,9 +17,10 @@
 		"check": "turbo run check",
 		"clean": "turbo run clean"
 	},
-	"packageManager": "pnpm@10.6.5",
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
+		"@changesets/cli": "^2.29.2",
 		"turbo": "^2.5.2"
-	}
+	},
+	"packageManager": "pnpm@10.6.5"
 }

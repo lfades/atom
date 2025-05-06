@@ -11,6 +11,9 @@ importers:
       '@biomejs/biome':
         specifier: 1.9.4
         version: 1.9.4
+      '@changesets/cli':
+        specifier: ^2.29.2
+        version: 2.29.2
       turbo:
         specifier: ^2.5.2
         version: 2.5.2
@@ -103,9 +106,6 @@ importers:
         specifier: '>= 18.0.0'
         version: 19.1.0
     devDependencies:
-      '@changesets/cli':
-        specifier: ^2.29.2
-        version: 2.29.2
       '@types/react':
         specifier: ^18.3.20
         version: 18.3.20

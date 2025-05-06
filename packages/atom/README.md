@@ -216,12 +216,20 @@ After cloning the repository, install dependencies with `pnpm`:
 pnpm install
 ```
 
-Make your changes and build the library:
+Run the main website:
 
 ```bash
-pnpm build
-# Or to watch for changes
 pnpm dev
+```
+
+And then open the site at [http:localhost:3000](http:localhost:3000) and test your changes in the [counter demo](apps/web/components/examples/counter.tsx).
+
+### Testing the library with a different app
+
+Alternatively, you can link the package and use it with an app outside the monorepo. First navigate to the package directory:
+
+```bash
+cd packages/atom
 ```
 
 and then create a [link](https://pnpm.io/cli/link) for the package:
@@ -240,4 +248,12 @@ To remove the linked package run the following command:
 
 ```bash
 pnpm uninstall --global @lfades/atom
+```
+
+### Releasing a new version
+
+After you're done with your changes, run:
+
+```bash
+pnpm changeset version
 ```
