@@ -255,5 +255,8 @@ pnpm uninstall --global @lfades/atom
 After you're done with your changes, run:
 
 ```bash
-pnpm changeset version
+pnpm changeset
 ```
+
+And add a good description of your changes.
+
