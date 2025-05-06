@@ -1,28 +1,24 @@
 # @lfades/atom
 
-Straightforward state management library for React. Featuring:
+Straightforward state management library for React. You can learn more about it at [atom.lfades.com](https://atom.lfades.com/).
 
-- Minimal API: The entire source code is [83 lines long](src/atom.ts). Feel free to copy it to your project instead of installing the package.
-- There's no underlying store, it's like a shared `useState`.
-- It helps you remove the complexity of state management by making you do thinks the react-way.
-
-## Getting Started
+## Installation
 
 Install the package with your package manager of choice:
-
-```bash
-npm install @lfades/atom
-```
 
 ```bash
 pnpm add @lfades/atom
 ```
 
 ```bash
+npm install @lfades/atom
+```
+
+```bash
 yarn add @lfades/atom
 ```
 
-Now, create an atom and use it:
+Now you can create an atom and subscribe to it:
 
 ```tsx
 import { atom, useAtom } from '@lfades/atom';
@@ -44,59 +40,7 @@ const Counter = () => {
 export default Counter;
 ```
 
-That's it! It only takes a few minutes to understand what the library does so I encourage you to read the [source code](src/atom.ts).
-
-## FAQ
-
-### Why another state management library?
-
-I think handling state should not be a complicated task. Current alternatives in React are either using React Context or some third party state management library. However, both have their own set of downsides:
-
-#### React Context
-
-A lot of times all that I want is a shared `useState` between components, and `atom` is exactly that. React Context can be overkill in these situations, because depending on the complexity of the app, you'll add more and more providers to handle simple states so it becomes common to end up with a long tree of providers when you only use React Context to globally share state, because having a single provider for everything can be bad for performance.
-
-One of the good use cases for React Context is when you need to change the state behind a tree of components based on some action or initial state, but a lot of times you won't need that, and if you do, [you can store multiple atoms in React Context that can be individually subscribed to](#usehydrate).
-
-#### Third party state management libraries
-
-In case you haven't noticed, this library takes a lot of inspiration from [Jotai](https://jotai.org/). That's intentional because I really enjoy the mental model of Jotai where the state works very similarly to React's `useState` and you're encouraged to do most of the work inside your components, so you're always developing in the react way.
-
-So why not just use Jotai instead? Well, Jotai does more than what I want it to do, like handling async operations, and it also allows for setters and state logic to live outside of your hooks/components, allowing you to create a separation between your state and your components that I don't consider to be a positive outcome.
-
-Other popular state management libraries like Redux and Zustand are great but also introduce more complexity in order to handle features you might not need. For example, if you need to handle data fetching it's probably better that you use [SWR](https://swr.vercel.app/). To handle promises the [use](https://react.dev/reference/react/use) hook.
-
-#### How should I handle complex state mutations?
-
-Create a hook that returns your mutation handlers that update one or multiple atoms. For example, I'm building an editor where you can select multiple components to edit them and this is the hook I created to handle the selection:
-
-```tsx
-export function useComponentActions(componentAtom: Atom<EditorPageBody>) {
-  // This reads multiple atoms from React Context.
-  const { importsAtom, selectedComponentAtom } = usePageStore();
-
-  return useMemo(
-    () => ({
-      selectComponent() {
-        if (selectedComponentAtom.get() === componentAtom) return;
-
-        const component = componentAtom.get();
-        const imports = importsAtom.get();
-        const variantImport = imports[component.tag];
-        const componentData = variantImport
-          ? getComponentData(imports[component.tag].fileName, component.tag)
-          : { commonProps: [], discriminators: {}, props: [] };
-
-        component.selectedAtom.set({ declaration: componentData });
-        selectedComponentAtom.set(componentAtom);
-      },
-    }),
-    [componentAtom, importsAtom, selectedComponentAtom]
-  );
-}
-```
-
-The `useComponentActions` hook returns a `selectComponent` function that updates multiple atoms at once. You can mutate the atoms directly without having to subscribe to changes so whoever calls the function doesn't have to re-render, and every update generated here will re-render components subscribed to one of the atoms.
+That's it! It only takes a few minutes to understand what the library does so I encourage you to read the [source code](packages/atom/src/atom.ts).
 
 ## API
 
@@ -156,7 +100,7 @@ counterAtom.set(1);
 
 #### Creating an atom inside a component
 
-This is a valid use case, but be sure to use `useMemo` to prevent the atom from being recreated on every render:
+This is a valid use case, but be sure to add `useMemo` to prevent the atom from being recreated on every render:
 
 ```tsx
 const counterAtom = useMemo(() => atom(0), []);
@@ -165,7 +109,7 @@ const [count, setCount] = useAtom(counterAtom);
 
 An atom created this way will work similarly to `useState`. However, you can pass down the atom through props and allow other components to subscribe to it if needed. This can prove particularly useful when combined with React Context.
 
-> The atom also has a unique identifier in `atom.id` that you can use as the `key` attribute.
+> Atoms also have a unique identifier in `atom.id` that you can use as the `key` attribute.
 
 ### `useSubscribe`
 
@@ -272,12 +216,20 @@ After cloning the repository, install dependencies with `pnpm`:
 pnpm install
 ```
 
-Make your changes and build the library:
+Run the main website:
 
 ```bash
-pnpm build
-# Or to watch for changes
 pnpm dev
+```
+
+And then open the site at [http:localhost:3000](http:localhost:3000) and test your changes in the [counter demo](apps/web/components/examples/counter.tsx).
+
+### Testing the library with a different app
+
+Alternatively, you can link the package and use it with an app outside the monorepo. First navigate to the package directory:
+
+```bash
+cd packages/atom
 ```
 
 and then create a [link](https://pnpm.io/cli/link) for the package:
@@ -297,3 +249,14 @@ To remove the linked package run the following command:
 ```bash
 pnpm uninstall --global @lfades/atom
 ```
+
+### Releasing a new version
+
+After you're done with your changes, run:
+
+```bash
+pnpm changeset
+```
+
+And add a good description of your changes.
+
