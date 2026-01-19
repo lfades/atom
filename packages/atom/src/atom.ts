@@ -62,4 +62,3 @@ export function useSubscribe<Value>(
 	// biome-ignore lint/correctness/useExhaustiveDependencies(cb): Unlikely to be needed.
 	useEffect(() => atom.sub(cb), [atom, ...deps])
 }
-
