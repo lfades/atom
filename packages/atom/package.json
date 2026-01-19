@@ -1,6 +1,6 @@
 {
 	"name": "@lfades/atom",
-	"version": "1.0.1",
+	"version": "2.0.0",
 	"license": "MIT",
 	"author": {
 		"name": "lfades",
@@ -18,8 +18,12 @@
 		".": "./dist/atom.js",
 		"./utils": "./dist/utils.js"
 	},
-	"files": ["dist/**/*.{js,d.ts}"],
-	"keywords": ["react"],
+	"files": [
+		"dist/**/*.{js,d.ts}"
+	],
+	"keywords": [
+		"react"
+	],
 	"peerDependencies": {
 		"react": ">= 18.0.0"
 	},

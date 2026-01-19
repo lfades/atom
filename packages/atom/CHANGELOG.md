@@ -1,5 +1,12 @@
 # @lfades/atom
 
+## 2.0.0
+
+### Major Changes
+
+- Removed `useHydrate`
+- Added `createAtomContext` util
+
 ## 1.0.0
 
 ### Major Changes
