@@ -143,69 +143,112 @@ useSubscribe(
 );
 ```
 
-### `useHydrate`
+## Advanced patterns
 
-```ts
-function useHydrate(cb: () => void, deps: DependencyList): void;
-```
+### Multiple atoms in a single provider
 
-Allows you to hydrate atoms, useful for updating atoms with data from the server. For example, we can have atoms be created and shared by a context provider, and hydrate them with server data:
+If you want a single provider that exposes many related atoms, create them together and export focused hooks.
 
 ```tsx
-// atoms-context.tsx
-import { atom, useHydrate } from '@lfades/atom';
+import { atom, useAtom } from '@lfades/atom';
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useMemo,
+} from 'react';
 
-const atoms = { counterAtom: atom(0) };
-export const atomsContext = React.createContext(atoms);
+type AppConfig = {
+  userId: string;
+  theme: 'light' | 'dark';
+  showHints: boolean;
+};
 
-export function AtomsProvider({ children, data }) {
-  useHydrate(() => {
-    if (data) {
-      atoms.counterAtom.set(data.counter);
-    }
-  }, [data]);
+const createAtoms = (config: AppConfig) => ({
+  userIdAtom: atom(config.userId),
+  themeAtom: atom(config.theme),
+  showHintsAtom: atom(config.showHints),
+});
+
+const AppAtomsContext =
+  createContext<ReturnType<typeof createAtoms> | null>(null);
+
+export function AppAtomsProvider({
+  children,
+  config,
+}: {
+  children: ReactNode;
+  config: AppConfig;
+}) {
+  const atoms = useMemo(() => createAtoms(config), []);
+
+  // Optionally subscribe to atoms here to trigger side effects from changes.
+  useEffect(() => {
+    const { themeAtom, showHintsAtom } = atoms;
+    const unsubs = [
+      themeAtom.sub((theme) => {
+        console.log('theme changed', theme);
+      }),
+      showHintsAtom.sub((showHints) => {
+        console.log('show hints changed', showHints);
+      }),
+    ];
+
+    return () => {
+      for (const unsub of unsubs) {
+        unsub();
+      }
+    };
+  }, [atoms]);
 
   return (
-    <atomsContext.Provider value={atoms}>{children}</atomsContext.Provider>
+    <AppAtomsContext.Provider value={atoms}>
+      {children}
+    </AppAtomsContext.Provider>
   );
+}
+
+function useAppAtoms() {
+  const atoms = useContext(AppAtomsContext);
+  if (!atoms) {
+    throw new Error('useAppAtoms must be used within AppAtomsProvider');
+  }
+  return atoms;
+}
+
+export function useTheme() {
+  return useAtom(useAppAtoms().themeAtom);
+}
+
+export function useShowHints() {
+  return useAtom(useAppAtoms().showHintsAtom);
 }
 ```
 
-```tsx
-// page.tsx
-import { AtomsProvider } from './atoms-context';
-import { Counter } from './counter';
+### Single atom provider with `createAtomContext`
 
-async function Page() {
-  const data = await fetchData();
-  return (
-    <Atoms data={data}>
-      <Counter />
-    </Atoms>
-  );
-}
-```
-
-The `Counter` component can then get the atom from the context and subscribe to the atom:
+If you only need a single atom, the `createAtomContext` utility can generate a provider and hooks for you.
 
 ```tsx
-// counter.tsx
-import { useAtom } from '@lfades/atom';
-import { atomsContext } from './atoms-context';
+import { createAtomContext } from '@lfades/atom/utils';
 
-function Counter() {
-  const { counterAtom } = React.useContext(atomsContext);
-  const [count, setCount] = useAtom(counterAtom);
+const [CounterProvider, useCounter, useCounterAtom] =
+  createAtomContext<number>();
 
+export function CounterRoot({ initial, children }) {
+  // `sync` keeps the atom value in sync with `initial`.
   return (
-    <div>
-      <h1>Counter: {count}</h1>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
-      <button onClick={() => setCount(count - 1)}>Decrement</button>
-    </div>
+    <CounterProvider value={initial} sync>
+      {children}
+    </CounterProvider>
   );
 }
-const counterAtom = atom(0);
+
+export function Counter() {
+  const [count, setCount] = useCounter();
+  return <button onClick={() => setCount(count + 1)}>{count}</button>;
+}
 ```
 
 ## Contributing

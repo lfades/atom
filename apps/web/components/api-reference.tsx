@@ -75,29 +75,6 @@ useSubscribe(
   [dep]
 );`}
 						/>
-						<ApiSection
-							name="useHydrate"
-							description="Allows you to hydrate atoms, useful for updating atoms with data from the server."
-							code={`// atoms-context.tsx
-import { atom, useHydrate } from '@lfades/atom';
-
-const atoms = { counterAtom: atom(0) };
-export const atomsContext = React.createContext(atoms);
-
-export function AtomsProvider({ children, data }) {
-  useHydrate(() => {
-    if (data) {
-      atoms.counterAtom.set(data.counter);
-    }
-  }, [data]);
-
-  return (
-    <atomsContext.Provider value={atoms}>
-      {children}
-    </atomsContext.Provider>
-  );
-}`}
-						/>
 					</div>
 				</div>
 			</div>

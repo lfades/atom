@@ -29,8 +29,9 @@ export function Navigation() {
 						<ul className="hidden md:flex items-center space-x-8">
 							<NavLink id="features">Features</NavLink>
 							<NavLink id="installation">Installation</NavLink>
-							<NavLink id="faq">FAQ</NavLink>
 							<NavLink id="api">API</NavLink>
+							<NavLink id="advanced-patterns">Advanced</NavLink>
+							<NavLink id="faq">FAQ</NavLink>
 						</ul>
 						<a
 							href="https://github.com/lfades/atom"
@@ -54,8 +55,9 @@ export function Navigation() {
 										<ul className="flex flex-col space-y-4 mx-4">
 											<NavLink id="features">Features</NavLink>
 											<NavLink id="installation">Installation</NavLink>
-											<NavLink id="faq">FAQ</NavLink>
 											<NavLink id="api">API</NavLink>
+											<NavLink id="advanced-patterns">Advanced</NavLink>
+											<NavLink id="faq">FAQ</NavLink>
 											<NavLink id="contributing">Contributing</NavLink>
 											<li className="flex">
 												<a

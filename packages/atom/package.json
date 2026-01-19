@@ -15,7 +15,8 @@
 		"release": "pnpm build && pnpm publish -r"
 	},
 	"exports": {
-		".": "./dist/atom.js"
+		".": "./dist/atom.js",
+		"./utils": "./dist/utils.js"
 	},
 	"files": [
 		"dist/**/*.{js,d.ts}"
@@ -27,7 +28,7 @@
 		"react": ">= 18.0.0"
 	},
 	"devDependencies": {
-		"@types/react": "^18.3.20",
-		"typescript": "^5.8.3"
+		"@types/react": "^18.3.27",
+		"typescript": "^5.9.3"
 	}
 }

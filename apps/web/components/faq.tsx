@@ -13,7 +13,7 @@ import { CopyButton } from "./copy-button"
 
 export function FAQ() {
 	return (
-		<section id="faq" className="py-24 bg-pane-1">
+		<section id="faq" className="py-24 bg-pane">
 			<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 				<div className="mx-auto max-w-3xl">
 					<motion.h2
@@ -36,8 +36,8 @@ export function FAQ() {
 						<Accordion type="single" collapsible className="w-full space-y-4">
 							<FAQItem id={0} title="Why another state management library?">
 								I think handling state should not be a complicated task. Current
-								alternatives in React are either using React Context or rely in
-								selectors, which you probably don't need.
+								alternatives in React either rely on selectors, have their own
+								APIs to handle updates, or do more than what I need them to do.
 							</FAQItem>
 							<FAQItem id={1} title="How does it compare to React Context?">
 								A lot of times all that I want is a shared <Code>useState</Code>{" "}
@@ -56,10 +56,7 @@ export function FAQ() {
 								<p>
 									This library takes inspiration from Jotai. That's intentional
 									because I really enjoy the mental model of Jotai where the
-									state works very similarly to React's <Code>useState</Code>{" "}
-									and you're encouraged to handle updates inside your
-									components, so you don't have no learn anything new, it's just
-									React.
+									state works very similarly to React's <Code>useState</Code>.{" "}
 								</p>
 								<p>
 									However, Jotai does more than what I want it to do and it also
@@ -68,67 +65,11 @@ export function FAQ() {
 									components is not a positive outcome, because React is
 									powerful enough that you simply don't need that.
 								</p>
-							</FAQItem>
-							<FAQItem
-								id={3}
-								title="How should I handle complex state mutations?"
-							>
 								<p>
-									Create a hook that returns mutation handlers that update one
-									or multiple atoms. This allows you to encapsulate complex
-									state logic while keeping your components clean.
-								</p>
-								<p>
-									For example, I'm building an editor where you can select
-									multiple components to edit them and this is the hook I
-									created to handle the selection:
-								</p>
-								<Card>
-									<CardContent className="relative pt-6 sm:pt-0">
-										<CodeBlock
-											lang="tsx"
-											data-id="install-command"
-											className="text-sm overflow-x-auto"
-											card
-										>
-											{`export function useComponentActions(componentAtom: Atom<EditorPageBody>) {
-  // This reads multiple atoms from React Context.
-  const { importsAtom, selectedComponentAtom } = usePageStore();
-
-  return useMemo(
-    () => ({
-      selectComponent() {
-        if (selectedComponentAtom.get() === componentAtom) return;
-
-        const component = componentAtom.get();
-        const imports = importsAtom.get();
-        const variantImport = imports[component.tag];
-        const componentData = variantImport
-          ? getComponentData(imports[component.tag].fileName, component.tag)
-          : { commonProps: [], discriminators: {}, props: [] };
-
-        component.selectedAtom.set({ declaration: componentData });
-        selectedComponentAtom.set(componentAtom);
-      },
-    }),
-    [componentAtom, importsAtom, selectedComponentAtom]
-  );
-}`}
-										</CodeBlock>
-										<CopyButton
-											id="install-command"
-											className="absolute right-4 -top-2"
-										/>
-									</CardContent>
-								</Card>
-								<p>
-									The <Code>useComponentActions</Code> hook returns a{" "}
-									<Code>selectComponent</Code> function that updates multiple
-									atoms at once. You can mutate the atoms directly without
-									having to subscribe to changes so whoever calls the function
-									doesn't have to re-render, and every update generated here
-									will only re-render components subscribed to one of the
-									updated atoms.
+									<Code>@lfades/atom</Code> is the combination of a shared{" "}
+									<Code>useState</Code> and everything else is just React, e.g a
+									state update is just a function in a component that updates
+									atoms when called.
 								</p>
 							</FAQItem>
 							{/* <FAQItem id={4} title="What about async updates?"> */}
@@ -162,9 +103,9 @@ function FAQItem({
 		>
 			<AccordionItem
 				value={`item-${id}`}
-				className="rounded-xl border shadow-lg bg-pane"
+				className="rounded-xl border shadow-lg bg-card"
 			>
-				<AccordionTrigger className="px-6 py-4 text-lg font-medium">
+				<AccordionTrigger className="px-6 py-4 text-lg font-medium items-center">
 					{title}
 				</AccordionTrigger>
 				<AccordionContent className="px-6 pb-4 space-y-4">

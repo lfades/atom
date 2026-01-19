@@ -13,8 +13,9 @@
 		"esModuleInterop": true,
 		"resolveJsonModule": true,
 		"isolatedModules": true,
-		"preserveSymlinks": true
+		"preserveSymlinks": true,
+		"jsx": "react-jsx"
 	},
-	"include": ["src/**/*.ts"],
+	"include": ["src/**/*.ts", "src/**/*.tsx"],
 	"exclude": ["node_modules"]
 }

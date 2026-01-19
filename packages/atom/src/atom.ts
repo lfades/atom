@@ -1,6 +1,5 @@
 import {
 	useEffect,
-	useRef,
 	useSyncExternalStore,
 	useDebugValue,
 	type DependencyList,
@@ -60,35 +59,7 @@ export function useSubscribe<Value>(
 	cb: SubFn<Value>,
 	deps: DependencyList = [],
 ) {
+	// biome-ignore lint/correctness/useExhaustiveDependencies(cb): Unlikely to be needed.
 	useEffect(() => atom.sub(cb), [atom, ...deps])
 }
 
-enum HydrateState {
-	Pending = 0,
-	Done = 1,
-	Effect = 2,
-}
-
-export function useHydrate(cb: () => void, deps: DependencyList) {
-	const hydratedRef = useRef<HydrateState>(HydrateState.Pending)
-
-	// Hydrate immediately for SSR and for the first render in the browser, this
-	// should avoid hydration mismatches.
-	if (hydratedRef.current === HydrateState.Pending) {
-		hydratedRef.current = HydrateState.Done
-		cb()
-	}
-
-	// This allows bundlers to remove the effect at build time.
-	if (typeof window !== "undefined") {
-		useEffect(() => {
-			// Prevent a double hydration and potential mismatch issues by running the
-			// callback only from the second render onwards.
-			if (hydratedRef.current === HydrateState.Done) {
-				hydratedRef.current = HydrateState.Effect
-			} else {
-				cb()
-			}
-		}, deps)
-	}
-}

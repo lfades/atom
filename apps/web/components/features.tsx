@@ -23,13 +23,13 @@ export function Features() {
 						viewport={{ once: true }}
 						transition={{ duration: 0.5, delay: 0.1 }}
 					>
-						@lfades/atom focuses on simplicity and React's principles
+						Minimal API with no store, built around React's principles.
 					</motion.p>
 				</div>
 
-				<div className="mt-16 grid gap-8 md:grid-cols-3">
+				<div className="mt-16 grid gap-8 md:grid-cols-2">
 					<Feature order={1} title="Minimal API">
-						The entire source code is less than 100 lines long. Feel free to{" "}
+						The entire source code is just 65 lines long. Feel free to{" "}
 						<a
 							href="https://github.com/lfades/atom/blob/monorepo/packages/atom/src/atom.ts"
 							target="_blank"
@@ -40,13 +40,11 @@ export function Features() {
 						</a>{" "}
 						into your project instead of installing the package.
 					</Feature>
-					<Feature order={2} title="No Store">
-						There's no underlying store or use of React Context. It's just a
-						shared <code className="text-secondary">useState</code>.
-					</Feature>
-					<Feature order={3} title="Less is More">
-						React can do what a state management library does. You don't need
-						anything more than just a shared value.
+					<Feature order={2} title="Less is More">
+						<code className="text-secondary">atom</code> does not have a
+						underlying store or context, but it integrates easily with one when
+						needed, and it encourages updates to happen inside React components
+						instead of a library API.
 					</Feature>
 				</div>
 			</div>

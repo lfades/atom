@@ -40,10 +40,12 @@ export function Installation() {
 								<PackageTrigger value="pnpm" />
 								<PackageTrigger value="npm" />
 								<PackageTrigger value="yarn" />
+								<PackageTrigger value="bun" />
 							</TabsList>
 							<CommandCard value="pnpm">pnpm add @lfades/atom</CommandCard>
 							<CommandCard value="npm">npm install @lfades/atom</CommandCard>
 							<CommandCard value="yarn">yarn add @lfades/atom</CommandCard>
+							<CommandCard value="bun">bun add @lfades/atom</CommandCard>
 						</Tabs>
 					</motion.div>
 				</div>

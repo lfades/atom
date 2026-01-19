@@ -2,7 +2,7 @@ import { Separator } from "@/components/ui/separator"
 
 export function Footer() {
 	return (
-		<footer className="border-t py-12">
+		<footer className="border-t py-12 bg-pane-1">
 			<div className="flex flex-col mx-auto max-w-7xl px-4 items-center sm:px-6 lg:px-8">
 				<p className="text-sm">
 					@lfades/atom - Straightforward state management library for React
