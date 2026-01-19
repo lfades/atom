@@ -3,7 +3,7 @@
 @import "./shadcn.css";
 
 /* Use `data-theme` for dark mode */
-@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* Catppuccin Mocha Colors */
 [data-theme="dark"] {
@@ -148,8 +148,9 @@
 }
 
 @theme {
-	--font-mono: var(--font-maple-mono), Monaco, Menlo, Consolas,
-		"Liberation Mono", "Courier New", monospace;
+	--font-mono:
+		var(--font-maple-mono), Monaco, Menlo, Consolas, "Liberation Mono",
+		"Courier New", monospace;
 
 	--color-accent-1: var(--theme-accent-1);
 	--color-accent-2: var(--theme-accent-2);

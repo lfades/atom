@@ -9,7 +9,11 @@ export function CopyButton({
 	id,
 	variant = "simple",
 	className,
-}: { variant?: "simple" | "complete"; id: string; className?: string }) {
+}: {
+	variant?: "simple" | "complete"
+	id: string
+	className?: string
+}) {
 	const [copied, setCopied] = useState(false)
 	const copyToClipboard = async () => {
 		const text = document.querySelector(`[data-id="${id}"]`)?.textContent

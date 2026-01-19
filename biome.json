@@ -9,8 +9,10 @@
 		"formatWithErrors": false,
 		"lineEnding": "lf",
 		"lineWidth": 80,
-		"attributePosition": "auto",
-		"ignore": [
+		"attributePosition": "auto"
+	},
+	"files": {
+		"experimentalScannerIgnores": [
 			"**/node_modules",
 			"**/.next",
 			"**/.vercel",
@@ -22,8 +24,13 @@
 			"**/yarn.lock"
 		]
 	},
-	"organizeImports": {
-		"enabled": true
+	"assist": {
+		"enabled": true,
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
 	},
 	"linter": {
 		"enabled": true,
@@ -53,6 +60,11 @@
 			"bracketSpacing": true,
 			"bracketSameLine": false,
 			"attributePosition": "auto"
+		}
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
 		}
 	}
 }
