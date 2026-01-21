@@ -48,6 +48,24 @@ export function Installation() {
 							<CommandCard value="bun">bun add @lfades/atom</CommandCard>
 						</Tabs>
 					</motion.div>
+					<motion.p
+						className="mt-4"
+						initial={{ opacity: 0, y: 20 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						viewport={{ once: true }}
+						transition={{ duration: 0.5, delay: 0.1 }}
+					>
+						Or just{" "}
+						<a
+							href="https://github.com/lfades/atom/blob/main/packages/atom/src/atom.ts"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-link hover:text-link-hover underline underline-offset-2"
+						>
+							copy the code
+						</a>
+						.
+					</motion.p>
 				</div>
 			</div>
 		</section>

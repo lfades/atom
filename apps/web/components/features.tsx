@@ -31,7 +31,7 @@ export function Features() {
 					<Feature order={1} title="Minimal API">
 						The entire source code is just 65 lines long. Feel free to{" "}
 						<a
-							href="https://github.com/lfades/atom/blob/monorepo/packages/atom/src/atom.ts"
+							href="https://github.com/lfades/atom/blob/main/packages/atom/src/atom.ts"
 							target="_blank"
 							rel="noopener noreferrer"
 							className="text-link hover:text-link-hover underline underline-offset-2"
