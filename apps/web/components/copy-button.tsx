@@ -1,9 +1,9 @@
 "use client"
 
-import { useState } from "react"
 import { Copy, Check } from "lucide-react"
-import { Button } from "./ui/button"
+import { useState } from "react"
 import { cn } from "@/lib/utils"
+import { Button } from "./ui/button"
 
 export function CopyButton({
 	id,

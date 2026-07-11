@@ -5,13 +5,12 @@ import {
 	type DependencyList,
 } from "react"
 
-export interface Atom<Value>
-	extends Readonly<{
-		get(): Value
-		getInitial(): Value
-		set(value: Value): void
-		sub(cb: SubFn<Value>): Unsub
-	}> {}
+export interface Atom<Value> extends Readonly<{
+	get(): Value
+	getInitial(): Value
+	set(value: Value): void
+	sub(cb: SubFn<Value>): Unsub
+}> {}
 
 export type SubFn<Value> = (value: Value) => void
 export type Unsub = () => void
@@ -60,6 +59,6 @@ export function useSubscribe<Value>(
 	cb: SubFn<Value>,
 	deps: DependencyList = [],
 ) {
-	// biome-ignore lint/correctness/useExhaustiveDependencies(cb): Unlikely to be needed.
+	// oxlint-disable-next-line react-hooks/exhaustive-deps -- cb is intentionally omitted.
 	useEffect(() => atom.sub(cb), [atom, ...deps])
 }

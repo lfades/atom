@@ -1,7 +1,6 @@
-import type { ReactNode } from "react"
-import Link from "next/link"
 import { Menu } from "lucide-react"
-import * as motion from "./motion"
+import Link from "next/link"
+import type { ReactNode } from "react"
 import { Button } from "@/components/ui/button"
 import {
 	Sheet,
@@ -9,6 +8,7 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet"
+import * as motion from "./motion"
 import { ThemeSwitcher } from "./theme-switcher"
 
 export function Navigation() {

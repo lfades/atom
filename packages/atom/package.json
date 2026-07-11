@@ -1,34 +1,34 @@
 {
 	"name": "@lfades/atom",
 	"version": "2.0.0",
+	"description": "Straightforward state management library for React.",
+	"keywords": [
+		"react"
+	],
 	"license": "MIT",
 	"author": {
 		"name": "lfades",
 		"url": "https://twitter.com/luis_fades"
 	},
-	"description": "Straightforward state management library for React.",
+	"files": [
+		"dist/**/*.{js,d.ts}"
+	],
 	"type": "module",
 	"sideEffects": false,
+	"exports": {
+		".": "./dist/atom.js",
+		"./utils": "./dist/utils.js"
+	},
 	"scripts": {
 		"build": "tsc",
 		"dev": "tsc -w",
 		"release": "pnpm build && pnpm publish -r"
 	},
-	"exports": {
-		".": "./dist/atom.js",
-		"./utils": "./dist/utils.js"
-	},
-	"files": [
-		"dist/**/*.{js,d.ts}"
-	],
-	"keywords": [
-		"react"
-	],
-	"peerDependencies": {
-		"react": ">= 18.0.0"
-	},
 	"devDependencies": {
 		"@types/react": "^19.2.8",
 		"typescript": "^5.9.3"
+	},
+	"peerDependencies": {
+		"react": ">= 18.0.0"
 	}
 }

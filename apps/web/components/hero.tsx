@@ -2,9 +2,9 @@ import "server-only"
 import { ArrowRight, Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { CounterExample } from "./examples/counter"
-import { CopyButton } from "./copy-button"
 import { CodeBlock } from "./code-block"
+import { CopyButton } from "./copy-button"
+import { CounterExample } from "./examples/counter"
 import * as motion from "./motion"
 
 export function Hero() {

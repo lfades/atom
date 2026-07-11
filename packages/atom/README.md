@@ -21,23 +21,23 @@ yarn add @lfades/atom
 Now you can create an atom and subscribe to it:
 
 ```tsx
-import { atom, useAtom } from '@lfades/atom';
+import { atom, useAtom } from "@lfades/atom"
 
-const counterAtom = atom(0);
+const counterAtom = atom(0)
 
 const Counter = () => {
-  const [count, setCount] = useAtom(counterAtom);
+	const [count, setCount] = useAtom(counterAtom)
 
-  return (
-    <div>
-      <h1>Counter: {count}</h1>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
-      <button onClick={() => setCount(count - 1)}>Decrement</button>
-    </div>
-  );
-};
+	return (
+		<div>
+			<h1>Counter: {count}</h1>
+			<button onClick={() => setCount(count + 1)}>Increment</button>
+			<button onClick={() => setCount(count - 1)}>Decrement</button>
+		</div>
+	)
+}
 
-export default Counter;
+export default Counter
 ```
 
 That's it! It only takes a few minutes to understand what the library does so I encourage you to read the [source code](packages/atom/src/atom.ts).
@@ -47,28 +47,28 @@ That's it! It only takes a few minutes to understand what the library does so I 
 ### `atom`
 
 ```ts
-function atom<Value>(initialValue: Value): Atom<Value>;
+function atom<Value>(initialValue: Value): Atom<Value>
 ```
 
 Creates an atom with the given `initialValue`.
 
 ```ts
-import { atom } from '@lfades/atom';
+import { atom } from "@lfades/atom"
 
-const counterAtom = atom(0);
+const counterAtom = atom(0)
 ```
 
 You can read the value of the atom without subscribing to it by using the `get` method:
 
 ```ts
-atom.get(); // 0
+atom.get() // 0
 ```
 
 Similarly, you can update the value of the atom with `set`:
 
 ```tsx
-atom.set(1);
-atom.get(); // 1
+atom.set(1)
+atom.get() // 1
 ```
 
 When you update the value of the atom, all components subscribed to it will re-render.
@@ -76,7 +76,7 @@ When you update the value of the atom, all components subscribed to it will re-r
 ### `useAtom`
 
 ```ts
-function useAtom<Value>(atom: Atom<Value>): [Value, (value: Value) => void];
+function useAtom<Value>(atom: Atom<Value>): [Value, (value: Value) => void]
 ```
 
 Returns the current value of the atom and a setter function to update it. This also subscribes the component to the atom, so it will re-render when the atom value changes.
@@ -84,18 +84,18 @@ Returns the current value of the atom and a setter function to update it. This a
 The setter returned by `useAtom` is equivalent to `atom.set`. So the following are equivalent:
 
 ```ts
-import { useAtom } from '@lfades/atom';
+import { useAtom } from "@lfades/atom"
 
-const [count, setCount] = useAtom(counterAtom);
+const [count, setCount] = useAtom(counterAtom)
 // ..
-setCount(1);
-setCount === counterAtom.set; // true
+setCount(1)
+setCount === counterAtom.set // true
 ```
 
 ```ts
-const count = useAtom(counterAtom)[0];
+const count = useAtom(counterAtom)[0]
 // ..
-counterAtom.set(1);
+counterAtom.set(1)
 ```
 
 #### Creating an atom inside a component
@@ -103,8 +103,8 @@ counterAtom.set(1);
 This is a valid use case, but be sure to add `useMemo` to prevent the atom from being recreated on every render:
 
 ```tsx
-const counterAtom = useMemo(() => atom(0), []);
-const [count, setCount] = useAtom(counterAtom);
+const counterAtom = useMemo(() => atom(0), [])
+const [count, setCount] = useAtom(counterAtom)
 ```
 
 An atom created this way will work similarly to `useState`. However, you can pass down the atom through props and allow other components to subscribe to it if needed. This can prove particularly useful when combined with React Context.
@@ -113,32 +113,32 @@ An atom created this way will work similarly to `useState`. However, you can pas
 
 ```ts
 function useSubscribe<Value>(
-  atom: Atom<Value>,
-  cb: SubFn<Value>,
-  deps?: DependencyList
-): void;
+	atom: Atom<Value>,
+	cb: SubFn<Value>,
+	deps?: DependencyList,
+): void
 ```
 
 Subscribes to the atom and calls the callback function with the new value whenever it changes.
 
 ```ts
-import { useSubscribe } from '@lfades/atom';
+import { useSubscribe } from "@lfades/atom"
 
 useSubscribe(counterAtom, (value) => {
-  console.log(value);
-});
+	console.log(value)
+})
 ```
 
 If the callback function has dependencies, you can pass them as the third argument:
 
 ```ts
 useSubscribe(
-  counterAtom,
-  (value) => {
-    console.log(value, dep);
-  },
-  [dep]
-);
+	counterAtom,
+	(value) => {
+		console.log(value, dep)
+	},
+	[dep],
+)
 ```
 
 ## Advanced patterns
@@ -148,79 +148,80 @@ useSubscribe(
 If you want a single provider that exposes many related atoms, create them together and export focused hooks.
 
 ```tsx
-import { atom, useAtom } from '@lfades/atom';
+import { atom, useAtom } from "@lfades/atom"
 import {
-  createContext,
-  type ReactNode,
-  useContext,
-  useEffect,
-  useMemo,
-} from 'react';
+	createContext,
+	type ReactNode,
+	useContext,
+	useEffect,
+	useMemo,
+} from "react"
 
 type AppConfig = {
-  userId: string;
-  theme: 'light' | 'dark';
-  showHints: boolean;
-};
+	userId: string
+	theme: "light" | "dark"
+	showHints: boolean
+}
 
 const createAtoms = (config: AppConfig) => ({
-  userIdAtom: atom(config.userId),
-  themeAtom: atom(config.theme),
-  showHintsAtom: atom(config.showHints),
-});
+	userIdAtom: atom(config.userId),
+	themeAtom: atom(config.theme),
+	showHintsAtom: atom(config.showHints),
+})
 
-const AppAtomsContext =
-  createContext<ReturnType<typeof createAtoms> | null>(null);
+const AppAtomsContext = createContext<ReturnType<typeof createAtoms> | null>(
+	null,
+)
 
 export function AppAtomsProvider({
-  children,
-  config,
+	children,
+	config,
 }: {
-  children: ReactNode;
-  config: AppConfig;
+	children: ReactNode
+	config: AppConfig
 }) {
-  const atoms = useMemo(() => createAtoms(config), []);
+	const atoms = useMemo(() => createAtoms(config), [])
 
-  // Optionally subscribe to atoms here to trigger side effects from changes.
-  useEffect(() => {
-    const { themeAtom, showHintsAtom } = atoms;
-    const unsubs = [
-      themeAtom.sub((theme) => {
-        console.log('theme changed', theme);
-      }),
-      showHintsAtom.sub((showHints) => {
-        console.log('show hints changed', showHints);
-      }),
-    ];
+	// Optionally subscribe to atoms here to trigger side effects from changes.
+	useEffect(() => {
+		const { themeAtom, showHintsAtom } = atoms
+		const unsubs = [
+			themeAtom.sub((theme) => {
+				console.log("theme changed", theme)
+			}),
+			showHintsAtom.sub((showHints) => {
+				console.log("show hints changed", showHints)
+			}),
+		]
 
-    return () => {
-      for (const unsub of unsubs) {
-        unsub();
-      }
-    };
-  }, [atoms]);
+		return () => {
+			for (const unsub of unsubs) {
+				unsub()
+			}
+		}
+	}, [atoms])
 
-  return (
-    <AppAtomsContext.Provider value={atoms}>
-      {children}
-    </AppAtomsContext.Provider>
-  );
+	return (
+		<AppAtomsContext.Provider value={atoms}>
+			{children}
+		</AppAtomsContext.Provider>
+	)
 }
 
 function useAppAtoms() {
-  const atoms = useContext(AppAtomsContext);
-  if (!atoms) {
-    throw new Error('useAppAtoms must be used within AppAtomsProvider');
-  }
-  return atoms;
+	const atoms = useContext(AppAtomsContext)
+	if (!atoms) {
+		throw new Error("useAppAtoms must be used within AppAtomsProvider")
+	}
+	return atoms
 }
 
 export function useTheme() {
-  return useAtom(useAppAtoms().themeAtom);
+	return useAtom(useAppAtoms().themeAtom)
 }
 
 export function useShowHints() {
-  return useAtom(useAppAtoms().showHintsAtom);
+	return useAtom(useAppAtoms().showHintsAtom)
 }
 ```
 
@@ -229,23 +230,23 @@ export function useShowHints() {
 If you only need a single atom, the `createAtomContext` utility can generate a provider and hooks for you.
 
 ```tsx
-import { createAtomContext } from '@lfades/atom/utils';
+import { createAtomContext } from "@lfades/atom/utils"
 
 const [CounterProvider, useCounter, useCounterAtom] =
-  createAtomContext<number>();
+	createAtomContext<number>()
 
 export function CounterRoot({ initial, children }) {
-  // `sync` keeps the atom value in sync with `initial`.
-  return (
-    <CounterProvider value={initial} sync>
-      {children}
-    </CounterProvider>
-  );
+	// `sync` keeps the atom value in sync with `initial`.
+	return (
+		<CounterProvider value={initial} sync>
+			{children}
+		</CounterProvider>
+	)
 }
 
 export function Counter() {
-  const [count, setCount] = useCounter();
-  return <button onClick={() => setCount(count + 1)}>{count}</button>;
+	const [count, setCount] = useCounter()
+	return <button onClick={() => setCount(count + 1)}>{count}</button>
 }
 ```
 
@@ -300,4 +301,3 @@ pnpm changeset
 ```
 
 And add a good description of your changes.
-

@@ -1,11 +1,11 @@
-import { Navigation } from "@/components/navigation"
-import { Hero } from "@/components/hero"
-import { Features } from "@/components/features"
-import { Installation } from "@/components/installation"
-import { API } from "@/components/api-reference"
 import { AdvancedPatterns } from "@/components/advanced-patterns"
+import { API } from "@/components/api-reference"
 import { FAQ } from "@/components/faq"
+import { Features } from "@/components/features"
 import { Footer } from "@/components/footer"
+import { Hero } from "@/components/hero"
+import { Installation } from "@/components/installation"
+import { Navigation } from "@/components/navigation"
 
 export default function Home() {
 	return (
