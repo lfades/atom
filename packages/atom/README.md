@@ -109,8 +109,6 @@ const [count, setCount] = useAtom(counterAtom);
 
 An atom created this way will work similarly to `useState`. However, you can pass down the atom through props and allow other components to subscribe to it if needed. This can prove particularly useful when combined with React Context.
 
-> Atoms also have a unique identifier in `atom.id` that you can use as the `key` attribute.
-
 ### `useSubscribe`
 
 ```ts

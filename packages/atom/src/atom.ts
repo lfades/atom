@@ -7,7 +7,6 @@ import {
 
 export interface Atom<Value>
 	extends Readonly<{
-		id: string
 		get(): Value
 		getInitial(): Value
 		set(value: Value): void
@@ -19,13 +18,12 @@ export type Unsub = () => void
 
 let atomCount = 0
 
+const atomIds = new WeakMap<object, string>()
+
 export function atom<Value>(initialValue: Value): Atom<Value> {
 	let value = initialValue
 	const subs = new Set<SubFn<Value>>()
-	const id = `atom${atomCount++}`
-
-	return Object.freeze({
-		id,
+	const atom = Object.freeze({
 		get() {
 			return value
 		},
@@ -46,11 +44,14 @@ export function atom<Value>(initialValue: Value): Atom<Value> {
 			}
 		},
 	} satisfies Atom<Value>)
+
+	atomIds.set(atom, `atom${atomCount++}`)
+	return atom
 }
 
 export function useAtom<Value>(atom: Atom<Value>) {
 	const value = useSyncExternalStore(atom.sub, atom.get, atom.getInitial)
-	useDebugValue(`${atom.id}: ${value}`)
+	useDebugValue(`${atomIds.get(atom)}: ${value}`)
 	return [value, atom.set] as const
 }
 
