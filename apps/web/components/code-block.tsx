@@ -47,7 +47,6 @@ export async function CodeBlock({ children, lang, card, ...rest }: Props) {
 		: {}
 
 	return (
-		// biome-ignore lint/security/noDangerouslySetInnerHtml: This is fine.
 		<div {...rest} dangerouslySetInnerHTML={{ __html: html }} style={style} />
 	)
 }

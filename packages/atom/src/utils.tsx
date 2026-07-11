@@ -29,7 +29,7 @@ export function createAtomContext<Value>() {
 		children: ReactNode
 		sync?: boolean
 	}) {
-		// biome-ignore lint/correctness/useExhaustiveDependencies(value): The atom must only be created once.
+		// oxlint-disable-next-line react-hooks/exhaustive-deps -- The atom must only be created once.
 		const valueAtom = useMemo(() => atom(value), [])
 
 		useEffect(() => {

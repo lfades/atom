@@ -6,10 +6,10 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Card, CardContent } from "@/components/ui/card"
-import * as motion from "./motion"
 import { Code } from "./code"
 import { CodeBlock } from "./code-block"
 import { CopyButton } from "./copy-button"
+import * as motion from "./motion"
 
 export function FAQ() {
 	return (
@@ -56,7 +56,8 @@ export function FAQ() {
 								<p>
 									This library takes inspiration from Jotai. That's intentional
 									because I really enjoy the mental model of Jotai where the
-									state works very similarly to React's <Code>useState</Code>.{" "}
+									state works very similarly to React's <Code>useState</Code>
+									.{" "}
 								</p>
 								<p>
 									However, Jotai does more than what I want it to do and it also

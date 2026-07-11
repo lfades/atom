@@ -1,0 +1,30 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"useTabs": true,
+	"printWidth": 80,
+	"semi": false,
+	"trailingComma": "all",
+	"arrowParens": "always",
+	"bracketSpacing": true,
+	"bracketSameLine": false,
+	"endOfLine": "lf",
+	"ignorePatterns": [
+		"**/node_modules/**",
+		"**/.next/**",
+		"**/.vercel/**",
+		"**/dist/**",
+		"**/.turbo/**",
+		"**/pnpm-lock.yaml"
+	],
+	"sortImports": {
+		"newlinesBetween": false,
+		"groups": [
+			"builtin",
+			"external",
+			["internal", "subpath"],
+			["parent", "sibling", "index"],
+			"style",
+			"unknown"
+		]
+	}
+}

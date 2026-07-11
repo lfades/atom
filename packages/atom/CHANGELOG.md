@@ -1,5 +1,11 @@
 # @lfades/atom
 
+## 3.0.0
+
+### Major Changes
+
+- Removed public `atom.id`. Debug labels are now private and only used by `useAtom` via `useDebugValue`.
+
 ## 2.0.0
 
 ### Major Changes
